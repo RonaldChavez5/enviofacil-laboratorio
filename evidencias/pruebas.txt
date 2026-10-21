@@ -1,0 +1,27 @@
+test_cotizar_no_registra_ni_publica (test_envios.TestCasosDeUso.test_cotizar_no_registra_ni_publica) ... ok
+test_falla_proveedor_no_guarda_ni_publica (test_envios.TestCasosDeUso.test_falla_proveedor_no_guarda_ni_publica) ... ok
+test_ocp_nueva_estrategia_sin_modificar_servicio (test_envios.TestCasosDeUso.test_ocp_nueva_estrategia_sin_modificar_servicio) ... ok
+test_rechaza_codigo_vacio (test_envios.TestCasosDeUso.test_rechaza_codigo_vacio) ... ok
+test_rechaza_tarifa_fuera_de_contrato (test_envios.TestCasosDeUso.test_rechaza_tarifa_fuera_de_contrato) ... ok
+test_registro_consulta_auditoria_e_historial (test_envios.TestCasosDeUso.test_registro_consulta_auditoria_e_historial) ... ok
+test_adapter_traduce_payload_y_respuesta (test_envios.TestContratos.test_adapter_traduce_payload_y_respuesta) ... ok
+test_codigos_diferentes_en_misma_api (test_envios.TestContratos.test_codigos_diferentes_en_misma_api) ... ok
+test_decorator_audita_solo_operaciones_exitosas (test_envios.TestContratos.test_decorator_audita_solo_operaciones_exitosas) ... ok
+test_liskov_repositorios_guardar_consultar_y_errores (test_envios.TestContratos.test_liskov_repositorios_guardar_consultar_y_errores) ... ok
+test_liskov_transportadoras_intercambiables (test_envios.TestContratos.test_liskov_transportadoras_intercambiables) ... ok
+test_builder_campos_opcionales (test_envios.TestDominio.test_builder_campos_opcionales) ... ok
+test_builder_rechaza_datos_incompletos (test_envios.TestDominio.test_builder_rechaza_datos_incompletos) ... ok
+test_factory_conserva_aviso_fragil (test_envios.TestDominio.test_factory_conserva_aviso_fragil) ... ok
+test_factory_method_productos_distintos (test_envios.TestDominio.test_factory_method_productos_distintos) ... ok
+test_producto_inmutable_e_independiente_del_builder (test_envios.TestDominio.test_producto_inmutable_e_independiente_del_builder) ... ok
+test_rechaza_destinatario_vacio (test_envios.TestDominio.test_rechaza_destinatario_vacio) ... ok
+test_tarifas_con_valores_esperados (test_envios.TestDominio.test_tarifas_con_valores_esperados) ... ok
+test_valida_peso_y_valor (test_envios.TestDominio.test_valida_peso_y_valor) ... ok
+test_desuscripcion (test_envios.TestObserver.test_desuscripcion) ... ok
+test_error_observador_no_revierte_registro_ni_bloquea_otros (test_envios.TestObserver.test_error_observador_no_revierte_registro_ni_bloquea_otros) ... ok
+test_varios_suscriptores_sin_duplicados (test_envios.TestObserver.test_varios_suscriptores_sin_duplicados) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.001s
+
+OK

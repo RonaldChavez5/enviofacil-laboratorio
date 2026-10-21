@@ -1,0 +1,15 @@
+ENVÍOFÁCIL | Demo académica | Tarifas y proveedores ficticios
+
+Modalidad: estandar; proveedor: ruta
+Cotización: COP 12,000
+AVISO: envío 62eaf3c9-2cc3-4913-b579-8233a7061892 registrado; guía: ESTANDAR | RL-0001 | Tunja | MANEJAR CON CUIDADO
+Consulta coincide: True
+Historial: 1 envío; auditoría: 2 operaciones
+Avisos de error: []
+
+Modalidad: express; proveedor: paquete
+Cotización: COP 19,000
+AVISO: envío 667676fc-0b40-4ff8-aac2-98e1800ed1bf registrado; guía: EXPRESS | PRIORIDAD ALTA | PY-0001 | Tunja | MANEJAR CON CUIDADO
+Consulta coincide: True
+Historial: 1 envío; auditoría: 2 operaciones
+Avisos de error: []

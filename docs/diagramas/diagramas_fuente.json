@@ -1,0 +1,770 @@
+{
+  "01_arquitectura_macro": {
+    "width": 1000,
+    "height": 620,
+    "nodes": [
+      [
+        "u",
+        350,
+        10,
+        300,
+        70,
+        "Operador de tienda"
+      ],
+      [
+        "cli",
+        300,
+        140,
+        400,
+        85,
+        "Consola\nEntrada y presentación"
+      ],
+      [
+        "co",
+        40,
+        320,
+        270,
+        110,
+        "Composición\nSelecciona modalidad\ny proveedor"
+      ],
+      [
+        "e",
+        360,
+        320,
+        300,
+        110,
+        "Componente Envíos\nCotizar · registrar\nconsultar · publicar"
+      ],
+      [
+        "m",
+        50,
+        525,
+        280,
+        80,
+        "Repositorio en memoria\nSin base de datos real"
+      ],
+      [
+        "n",
+        375,
+        525,
+        270,
+        80,
+        "Notificaciones locales\nConsola e historial"
+      ],
+      [
+        "t",
+        710,
+        320,
+        270,
+        110,
+        "APIs simuladas\nRutaLocal\nPaqueteYa"
+      ]
+    ],
+    "edges": [
+      [
+        "u",
+        "cli",
+        "usa",
+        "dep"
+      ],
+      [
+        "cli",
+        "e",
+        "invoca",
+        "dep"
+      ],
+      [
+        "co",
+        "e",
+        "inyecta",
+        "dep"
+      ],
+      [
+        "e",
+        "m",
+        "guarda / consulta",
+        "dep"
+      ],
+      [
+        "e",
+        "n",
+        "evento local",
+        "dep"
+      ],
+      [
+        "e",
+        "t",
+        "puerto",
+        "dep"
+      ]
+    ]
+  },
+  "02_hexagonal": {
+    "width": 1000,
+    "height": 610,
+    "nodes": [
+      [
+        "cli",
+        20,
+        40,
+        280,
+        100,
+        "Adaptador de entrada\n__main__.py\nCLI"
+      ],
+      [
+        "srv",
+        370,
+        40,
+        300,
+        110,
+        "Puerto de entrada\nServicioEnvios\ncotizar / registrar / consultar"
+      ],
+      [
+        "dom",
+        710,
+        40,
+        280,
+        110,
+        "Dominio\nSolicitudEnvio · Envio\nTarifas · guías · Builder"
+      ],
+      [
+        "p",
+        370,
+        290,
+        300,
+        125,
+        "Puertos de salida\nRepositorioEnvios\nTransportadora\nSuscriptorEnvio"
+      ],
+      [
+        "a",
+        20,
+        470,
+        340,
+        115,
+        "Adaptadores de salida\nRepositorioMemoria / Auditado\nAdaptadorRutaLocal / PaqueteYa"
+      ],
+      [
+        "o",
+        640,
+        470,
+        340,
+        115,
+        "Observadores\nHistorialEnvios\nNotificadorConsola"
+      ],
+      [
+        "pub",
+        20,
+        285,
+        280,
+        110,
+        "Aplicación\nPublicadorEnvios\npublicar(evento)"
+      ]
+    ],
+    "edges": [
+      [
+        "cli",
+        "srv",
+        "invoca",
+        "dep"
+      ],
+      [
+        "srv",
+        "dom",
+        "usa",
+        "dep"
+      ],
+      [
+        "srv",
+        "p",
+        "depende de",
+        "dep"
+      ],
+      [
+        "srv",
+        "pub",
+        "publica",
+        "dep"
+      ],
+      [
+        "pub",
+        "p",
+        "usa suscriptor",
+        "dep"
+      ],
+      [
+        "a",
+        "p",
+        "implementan",
+        "implementation"
+      ],
+      [
+        "o",
+        "p",
+        "implementan",
+        "implementation"
+      ]
+    ]
+  },
+  "03_clases_central": {
+    "width": 1000,
+    "height": 760,
+    "nodes": [
+      [
+        "s",
+        350,
+        255,
+        310,
+        195,
+        "ServicioEnvios\n- repositorio: RepositorioEnvios\n- transportadora: Transportadora\n- tarifa: PoliticaTarifa\n- creador: CreadorGuia\n- publicador: PublicadorEnvios\n+ cotizar(s) / registrar(s)\n+ consultar(id)"
+      ],
+      [
+        "sol",
+        20,
+        20,
+        300,
+        170,
+        "SolicitudEnvio «inmutable»\norigen / destino / destinatario\npeso_kg / valor_declarado\nfragil / instrucciones / referencia\n+ __post_init__()"
+      ],
+      [
+        "e",
+        365,
+        20,
+        280,
+        150,
+        "Envio «inmutable»\nid: str\nsolicitud: SolicitudEnvio\ncosto: Decimal / guia: str"
+      ],
+      [
+        "r",
+        705,
+        20,
+        280,
+        130,
+        "ResultadoRegistro\nenvio: Envio\navisos: tuple[str, ...]"
+      ],
+      [
+        "repo",
+        20,
+        290,
+        285,
+        125,
+        "RepositorioEnvios «ABC»\n+ guardar(envio)\n+ obtener(id): Envio"
+      ],
+      [
+        "t",
+        710,
+        290,
+        280,
+        125,
+        "Transportadora «ABC»\n+ despachar(s): str"
+      ],
+      [
+        "tar",
+        20,
+        600,
+        280,
+        110,
+        "PoliticaTarifa «Strategy»\n+ calcular(s): Decimal"
+      ],
+      [
+        "g",
+        360,
+        600,
+        290,
+        110,
+        "CreadorGuia «Factory»\n+ emitir(codigo, s): str\n+ crear(codigo, s): Guia"
+      ],
+      [
+        "p",
+        705,
+        585,
+        285,
+        145,
+        "PublicadorEnvios\n- suscriptores: list\n+ suscribir / desuscribir\n+ publicar(evento): list[str]"
+      ]
+    ],
+    "edges": [
+      [
+        "e",
+        "sol",
+        "1",
+        "dep"
+      ],
+      [
+        "r",
+        "e",
+        "1",
+        "dep"
+      ],
+      [
+        "s",
+        "e",
+        "crea",
+        "dep"
+      ],
+      [
+        "s",
+        "repo",
+        "1",
+        "dep"
+      ],
+      [
+        "s",
+        "t",
+        "1",
+        "dep"
+      ],
+      [
+        "s",
+        "tar",
+        "1",
+        "dep"
+      ],
+      [
+        "s",
+        "g",
+        "1",
+        "dep"
+      ],
+      [
+        "s",
+        "p",
+        "1",
+        "dep"
+      ]
+    ]
+  },
+  "04_factory_method": {
+    "width": 1000,
+    "height": 430,
+    "nodes": [
+      [
+        "c",
+        20,
+        20,
+        350,
+        110,
+        "CreadorGuia «Creator»\n+ emitir(codigo, s): str\n+ crear(codigo, s): Guia"
+      ],
+      [
+        "g",
+        650,
+        20,
+        330,
+        90,
+        "Guia «Product»\n+ texto(): str"
+      ],
+      [
+        "ce",
+        20,
+        280,
+        260,
+        110,
+        "CreadorEstandar\n«ConcreteCreator»\n+ crear(codigo, s)"
+      ],
+      [
+        "cx",
+        330,
+        280,
+        280,
+        110,
+        "CreadorExpress\n«ConcreteCreator»\n+ crear(codigo, s)"
+      ],
+      [
+        "ge",
+        650,
+        190,
+        330,
+        90,
+        "GuiaEstandar\n+ texto(): str"
+      ],
+      [
+        "gx",
+        650,
+        325,
+        330,
+        90,
+        "GuiaExpress\n+ texto(): str"
+      ]
+    ],
+    "edges": [
+      [
+        "c",
+        "g",
+        "crea y usa",
+        "dep"
+      ],
+      [
+        "ce",
+        "c",
+        "",
+        "inheritance"
+      ],
+      [
+        "cx",
+        "c",
+        "",
+        "inheritance"
+      ],
+      [
+        "ge",
+        "g",
+        "",
+        "inheritance"
+      ],
+      [
+        "gx",
+        "g",
+        "",
+        "inheritance",
+        [
+          [
+            980,
+            350
+          ],
+          [
+            995,
+            350
+          ],
+          [
+            995,
+            65
+          ],
+          [
+            980,
+            65
+          ]
+        ]
+      ],
+      [
+        "ce",
+        "ge",
+        "crea",
+        "dep",
+        [
+          [
+            280,
+            300
+          ],
+          [
+            310,
+            300
+          ],
+          [
+            310,
+            235
+          ],
+          [
+            650,
+            235
+          ]
+        ]
+      ],
+      [
+        "cx",
+        "gx",
+        "crea",
+        "dep"
+      ]
+    ]
+  },
+  "05_builder": {
+    "width": 1000,
+    "height": 290,
+    "nodes": [
+      [
+        "cl",
+        20,
+        80,
+        240,
+        120,
+        "CLI «Client»\nDefine la secuencia\nde construcción"
+      ],
+      [
+        "b",
+        350,
+        20,
+        300,
+        250,
+        "SolicitudBuilder «Builder»\n- datos: dict\n+ ruta(o, d)\n+ destinatario(nombre)\n+ paquete(peso)\n+ declarar_valor(valor)\n+ marcar_fragil()\n+ instrucciones / referencia\n+ construir(): SolicitudEnvio"
+      ],
+      [
+        "s",
+        735,
+        80,
+        250,
+        120,
+        "SolicitudEnvio «Product»\nDatos inmutables\nValida al construirse"
+      ]
+    ],
+    "edges": [
+      [
+        "cl",
+        "b",
+        "pasos",
+        "dep"
+      ],
+      [
+        "b",
+        "s",
+        "construye",
+        "dep"
+      ]
+    ]
+  },
+  "06_adapter": {
+    "width": 1000,
+    "height": 360,
+    "nodes": [
+      [
+        "p",
+        340,
+        15,
+        320,
+        85,
+        "Transportadora «Target»\n+ despachar(s): str"
+      ],
+      [
+        "a",
+        20,
+        165,
+        390,
+        90,
+        "AdaptadorRutaLocal «Adapter»\n+ despachar(s): str"
+      ],
+      [
+        "b",
+        590,
+        165,
+        390,
+        90,
+        "AdaptadorPaqueteYa «Adapter»\n+ despachar(s): str"
+      ],
+      [
+        "x",
+        20,
+        295,
+        390,
+        60,
+        "ApiRutaLocalSimulada\n+ crear_orden(payload): dict"
+      ],
+      [
+        "y",
+        590,
+        295,
+        390,
+        60,
+        "ApiPaqueteYaSimulada\n+ reservar(destino, kilos, ...): str"
+      ]
+    ],
+    "edges": [
+      [
+        "a",
+        "p",
+        "",
+        "implementation"
+      ],
+      [
+        "b",
+        "p",
+        "",
+        "implementation"
+      ],
+      [
+        "a",
+        "x",
+        "traduce",
+        "dep"
+      ],
+      [
+        "b",
+        "y",
+        "traduce",
+        "dep"
+      ]
+    ]
+  },
+  "07_decorator": {
+    "width": 1000,
+    "height": 330,
+    "nodes": [
+      [
+        "p",
+        340,
+        15,
+        320,
+        100,
+        "RepositorioEnvios «Component»\n+ guardar(envio)\n+ obtener(id): Envio"
+      ],
+      [
+        "a",
+        20,
+        220,
+        360,
+        100,
+        "RepositorioMemoria\n«ConcreteComponent»\n- envios: dict"
+      ],
+      [
+        "b",
+        600,
+        220,
+        380,
+        100,
+        "RepositorioAuditado «Decorator»\n- interno: RepositorioEnvios\n- bitacora: list[str]"
+      ]
+    ],
+    "edges": [
+      [
+        "a",
+        "p",
+        "",
+        "implementation"
+      ],
+      [
+        "b",
+        "p",
+        "",
+        "implementation"
+      ],
+      [
+        "b",
+        "p",
+        "envuelve 1",
+        "dep",
+        [
+          [
+            980,
+            250
+          ],
+          [
+            995,
+            250
+          ],
+          [
+            995,
+            65
+          ],
+          [
+            660,
+            65
+          ]
+        ]
+      ]
+    ]
+  },
+  "08_strategy": {
+    "width": 1000,
+    "height": 330,
+    "nodes": [
+      [
+        "c",
+        20,
+        20,
+        340,
+        100,
+        "ServicioEnvios «Context»\n- tarifa: PoliticaTarifa\n+ cotizar(s): Decimal"
+      ],
+      [
+        "p",
+        620,
+        20,
+        360,
+        100,
+        "PoliticaTarifa «Strategy»\n+ calcular(s): Decimal"
+      ],
+      [
+        "a",
+        210,
+        220,
+        330,
+        90,
+        "TarifaEstandar\n+ calcular(s): Decimal"
+      ],
+      [
+        "b",
+        650,
+        220,
+        330,
+        90,
+        "TarifaExpress\n+ calcular(s): Decimal"
+      ]
+    ],
+    "edges": [
+      [
+        "c",
+        "p",
+        "delega",
+        "dep"
+      ],
+      [
+        "a",
+        "p",
+        "",
+        "inheritance"
+      ],
+      [
+        "b",
+        "p",
+        "",
+        "inheritance"
+      ]
+    ]
+  },
+  "09_observer": {
+    "width": 1000,
+    "height": 360,
+    "nodes": [
+      [
+        "p",
+        20,
+        15,
+        390,
+        135,
+        "PublicadorEnvios «Publisher»\n- suscriptores: list\n+ suscribir / desuscribir\n+ publicar(evento): list[str]"
+      ],
+      [
+        "i",
+        610,
+        15,
+        370,
+        100,
+        "SuscriptorEnvio «Subscriber»\n+ actualizar(evento)"
+      ],
+      [
+        "a",
+        130,
+        245,
+        370,
+        90,
+        "HistorialEnvios «Subscriber»\n- ids: list[str]\n+ actualizar(evento)"
+      ],
+      [
+        "b",
+        610,
+        245,
+        370,
+        90,
+        "NotificadorConsola «Subscriber»\n+ actualizar(evento)"
+      ]
+    ],
+    "edges": [
+      [
+        "p",
+        "i",
+        "notifica 0..*",
+        "dep"
+      ],
+      [
+        "a",
+        "i",
+        "",
+        "implementation"
+      ],
+      [
+        "b",
+        "i",
+        "",
+        "implementation"
+      ]
+    ]
+  }
+}

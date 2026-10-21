@@ -1,0 +1,19 @@
+Entrada de prueba (una respuesta por línea):
+estandar
+ruta
+Bogotá
+Tunja
+Cliente de prueba
+2
+100000
+s
+Recepción
+PED-001
+s
+
+Salida real:
+Modalidad [estandar/express]: Proveedor simulado [ruta/paquete]: Origen: Destino: Destinatario: Peso en kg: Valor declarado COP [0]: ¿Es frágil? [s/n]: Instrucciones opcionales: Referencia opcional: Cotización: COP 12,000
+¿Registrar? [s/n]: AVISO: envío c7eeaef9-4344-47de-8da0-39d1b7affe7b registrado; guía: ESTANDAR | RL-0001 | Tunja | MANEJAR CON CUIDADO
+ID: c7eeaef9-4344-47de-8da0-39d1b7affe7b
+Guía: ESTANDAR | RL-0001 | Tunja | MANEJAR CON CUIDADO
+Consulta: ESTANDAR | RL-0001 | Tunja | MANEJAR CON CUIDADO
